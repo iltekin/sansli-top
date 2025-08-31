@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         endpoint = 'get';
     }
 
-    fetch(`https://count.iltekin.com/sanslitop/${endpoint}/start`, {
+    fetch(`https://code.iltekin.com/count/sanslitop/${endpoint}/start`, {
         method: 'GET',
         mode: 'cors'
     })
