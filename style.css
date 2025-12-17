@@ -5,7 +5,10 @@
 
 body {
     margin: 0;
-    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    background-color: #283582;
+    background-image: url("./assets/background.jpg?v=4");
+    background-size: 100%;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -24,8 +27,8 @@ body {
     .main-container {
         flex-direction: row;
         min-width: 700px;
-        max-width: 1200px;
-        margin: 0 auto;
+        margin: 0 10vh 0 auto;
+        align-self: end;
         align-items: flex-start;
         flex: 1 0 auto;
     }
@@ -34,9 +37,7 @@ body {
 
 /* Desktop için iki sütunlu düzen */
 @media (min-width: 1200px) {
-    .main-container {
-        min-width: 1080px;
-    }
+    .main-container {}
 }
 
 .lottery-section {
@@ -44,22 +45,22 @@ body {
     flex-grow: 1;
     flex-direction: column;
     align-items: center;
-    background: white;
+    background: #283880;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    border: 2px solid white;
 }
 
 .history-section {
     background: white;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     min-height: 300px;
-    width: 340px;
 }
 
 .empty-state {
@@ -87,7 +88,7 @@ body {
 
 .history-section h3 {
     margin-top: 0;
-    color: #333;
+    color: #ffffff;
     padding-bottom: 10px;
 }
 
@@ -137,7 +138,7 @@ input {
     height: 100px;
     background: #fff;
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 0 10px;
     position: relative;
     display: flex;
@@ -218,7 +219,8 @@ button {
     #pickButton {
         width: 100%;
         max-width: none;
-        height: 48px;  /* Mobilde biraz daha büyük */
+        height: 48px;
+        /* Mobilde biraz daha büyük */
         font-size: 16px;
     }
 }
@@ -247,6 +249,7 @@ button {
 }
 
 .index-number {
+    display: none;
     color: #999;
     font-size: 14px;
 }
@@ -268,9 +271,24 @@ button {
     font-size: inherit;
 }
 
+.right-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#historyList li span.result-gift {
+    font-size: 12px;
+    color: #666;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+}
+
 .history-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
     margin-bottom: 15px;
     border-bottom: 2px solid #f0f0f0;
@@ -327,7 +345,7 @@ input[type="number"] {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -339,7 +357,7 @@ input[type="number"] {
     border-radius: 10px;
     width: 400px;
     max-width: 90%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .popup-header {
@@ -405,25 +423,26 @@ input[type="number"] {
     width: 100%;
 }
 
-.control-icons > div {
+.control-icons>div {
     flex: 1;
     display: flex;
     align-items: center;
 }
 
-.control-icons > div:first-child {
+.control-icons>div:first-child {
     justify-content: flex-start;
 }
 
-.control-icons > div:nth-child(2) {
+.control-icons>div:nth-child(2) {
     justify-content: center;
 }
 
-.control-icons > div:last-child {
+.control-icons>div:last-child {
     justify-content: flex-end;
 }
 
-.sound-icon, .settings-icon {
+.sound-icon,
+.settings-icon {
     font-size: 24px;
     cursor: pointer;
     transition: all 0.3s;
@@ -435,7 +454,8 @@ input[type="number"] {
     justify-content: center;
 }
 
-.sound-icon:hover, .settings-icon:hover {
+.sound-icon:hover,
+.settings-icon:hover {
     color: #666;
 }
 
@@ -456,14 +476,15 @@ input[type="number"] {
 
 .main-title {
     text-align: center;
-    color: #333;
+    color: #ffffff;
     font-size: 32px;
     padding: 10px 0;
     font-weight: 600;
 }
 
 .reset-button {
-    background-color: #6c757d;  /* Gri tonu */
+    background-color: #6c757d;
+    /* Gri tonu */
     color: white;
     padding: 10px;
     border: none;
@@ -690,15 +711,18 @@ input[type="number"] {
         padding: 10px;
     }
 
-    .setting-item:first-child {  /* Başlık input'unun olduğu setting-item */
+    .setting-item:first-child {
+        /* Başlık input'unun olduğu setting-item */
         display: none;
     }
 }
 
 @keyframes highlightRow {
     0% {
-        background-color: rgba(76, 175, 80, 0.2);  /* Hafif yeşil */
+        background-color: rgba(76, 175, 80, 0.2);
+        /* Hafif yeşil */
     }
+
     100% {
         background-color: transparent;
     }
@@ -710,10 +734,13 @@ input[type="number"] {
 
 @keyframes highlightBall {
     0% {
-        box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);  /* Hafif yeşil glow efekti */
+        box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+        /* Hafif yeşil glow efekti */
     }
+
     100% {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Normal haline dön */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* Normal haline dön */
     }
 }
 
@@ -723,13 +750,15 @@ input[type="number"] {
 
 /* Input placeholder rengini soldur */
 input::placeholder {
-    color: #ccc;  /* Daha soluk gri */
+    color: #ccc;
+    /* Daha soluk gri */
 }
 
 /* Firefox için placeholder rengi */
 input::-moz-placeholder {
     color: #ccc;
-    opacity: 1;  /* Firefox'ta opacity varsayılan olarak 0.54 */
+    opacity: 1;
+    /* Firefox'ta opacity varsayılan olarak 0.54 */
 }
 
 /* Edge için placeholder rengi */
@@ -749,7 +778,7 @@ input::-ms-input-placeholder {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -759,7 +788,7 @@ input::-ms-input-placeholder {
     background: white;
     width: 400px;
     max-width: 100%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -856,9 +885,10 @@ input::-ms-input-placeholder {
     .control-icons {
         gap: 10px;
     }
-    
-    .control-icons > div:nth-child(2) {
-        flex: 2;  /* Orta kısm mobilde biraz daha geniş olsun */
+
+    .control-icons>div:nth-child(2) {
+        flex: 2;
+        /* Orta kısm mobilde biraz daha geniş olsun */
     }
 }
 
@@ -1088,6 +1118,7 @@ textarea::placeholder,
 
 /* Mobil görünüm için */
 @media (max-width: 768px) {
+
     textarea,
     .setting-item input[type="text"] {
         padding: 14px 16px;
@@ -1114,7 +1145,7 @@ textarea::placeholder,
     -webkit-appearance: none;
     min-width: 180px;
     transition: all 0.2s ease;
-    
+
     /* Özel dropdown ikonu - çift yönlü ok */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 15l5 5 5-5'/%3E%3Cpath d='M7 9l5-5 5 5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -1182,7 +1213,7 @@ textarea::placeholder,
     .draw-controls {
         flex-direction: column;
     }
-    
+
     .draw-count-input input {
         width: 100%;
         max-width: 250px;
@@ -1240,8 +1271,10 @@ textarea::placeholder,
     }
 
     .names-list-buttons {
-        margin-top: auto;  /* Butonları alta itecek */
-        padding: 20px 0;  /* Butonlar için boşluk */
+        margin-top: auto;
+        /* Butonları alta itecek */
+        padding: 20px 0;
+        /* Butonlar için boşluk */
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -1414,4 +1447,7 @@ textarea::placeholder,
     opacity: 0.5;
     z-index: 1000;
 }
- 
+
+.hidden {
+    display: none !important;
+}

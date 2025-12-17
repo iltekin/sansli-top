@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Şanslı Top</title>
+    <title>Yılbaşı Çekilişi</title>
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
@@ -15,26 +16,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=4">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJGXQ3XV0Z"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-    gtag('config', 'G-TJGXQ3XV0Z');
+        gtag('config', 'G-TJGXQ3XV0Z');
     </script>
 
 </head>
+
 <body>
     <div class="main-title-container">
-        <h1 id="mainTitle" class="main-title">Şanslı Top</h1>
+        <h1 id="mainTitle" class="main-title">Yılbaşı Çekilişi</h1>
     </div>
     <div class="main-container">
         <div class="lottery-section">
-            <div class="control-icons">
+            <div class="control-icons hidden">
                 <div class="sound-icon" id="soundBtn">
                     <i class="fas fa-volume-up"></i>
                 </div>
@@ -54,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="input-section">
+            <div class="input-section hidden">
                 <div class="input-group">
                     <label for="startNum">İlk Sayı</label>
                     <input type="number" id="startNum" placeholder="Başlangıç sayısı" value="1">
@@ -64,7 +66,7 @@
                     <input type="number" id="endNum" placeholder="Bitiş sayısı">
                 </div>
             </div>
-            
+
             <div class="balls-container">
                 <!-- Toplar dinamik olarak eklenecek -->
             </div>
@@ -73,7 +75,7 @@
                 <div class="draw-count-input" style="display: none;">
                     <input type="number" id="drawCount" min="1" max="100" placeholder="Çekim sayısı">
                 </div>
-                <button id="pickButton">Çekilişi Başlat</button>
+                <button id="pickButton" class="hidden">Çekilişi Başlat</button>
             </div>
             <div id="draw-error"></div>
         </div>
@@ -81,7 +83,7 @@
         <div class="history-section">
             <div class="history-header">
                 <h3>Sonuçlar</h3>
-                <button id="clearHistory" class="clear-button">Çekilişi Bitir</button>
+                <button id="clearHistory" class="clear-button hidden">Çekilişi Bitir</button>
             </div>
             <ul id="historyList"></ul>
         </div>
@@ -89,13 +91,7 @@
 
     <!-- Footer ekleniyor -->
     <footer class="footer">
-        <p>
-            <a href="https://sansli.top">sansli.top</a> projesi <a href="https://x.com/sezeriltekin" target="_blank" rel="noopener noreferrer">sezer iltekin</a> tarafından <a href="https://github.com/iltekin/sansli-top" target="_blank" rel="noopener noreferrer">açık kaynak</a> olarak geliştirilmiştir. 
-            <br>
-            <a href="https://buymeacoffee.com/sezeriltekin" target="_blank" rel="noopener noreferrer">
-                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 40px; margin-top: 10px;">
-            </a>
-        </p>
+        <!-- Footer içeriği buraya eklenecek -->
     </footer>
 
     <!-- Popup -->
@@ -183,6 +179,7 @@
     <audio id="spinSound" src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
     <audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/1111/1111-preview.mp3"></audio>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=4"></script>
 </body>
-</html> 
+
+</html>

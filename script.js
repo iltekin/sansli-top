@@ -13,7 +13,7 @@ const translations = {
         slow: "Yavaş",
         normal: "Normal",
         fast: "Hızlı",
-        drawEnded: "Çekilecek başka sayı kalmadı",
+        drawEnded: "Hediye listesi bitmiştir",
         confirmEnd: "Çekilişi bitirmek istediğinizden emin misiniz? Tüm sonuçlar silinecektir.",
         enterValidStart: "Lütfen geçerli bir başlangıç sayısı giriniz!",
         enterValidEnd: "Lütfen geçerli bir bitiş sayısı giriniz!",
@@ -101,7 +101,7 @@ const translations = {
         uploadImageText: "Click to select image",
         backgroundImageLabel: "Background Image",
         footerText: '<a href="https://sansli.top">sansli.top</a> project is developed as <a href="https://github.com/iltekin/sansli-top" target="_blank" rel="noopener noreferrer">open source</a> by <a href="https://x.com/sezeriltekin" target="_blank" rel="noopener noreferrer">sezer iltekin</a>.<br><a href="https://buymeacoffee.com/sezeriltekin" target="_blank" rel="noopener noreferrer"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"></a>'
-}
+    }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -115,25 +115,25 @@ document.addEventListener('DOMContentLoaded', () => {
         endpoint = 'get';
     }
 
-    fetch(`https://count.iltekin.com/sanslitop/${endpoint}/start`, {
-        method: 'GET',
-        mode: 'cors'
-    })
-    .then(response => response.json())
-    .then(data => {
-        localStorage.setItem('loginTime', currentTime.toString());
-        const visitorCount = document.createElement('div');
-        visitorCount.className = 'visitor-count';
-        visitorCount.textContent = `${data.value}`;
-        const userIcon = document.createElement('i');
-        userIcon.className = 'fas fa-user';
-        visitorCount.insertBefore(userIcon, visitorCount.firstChild);
-        document.body.appendChild(visitorCount);
-    })
-    .catch(error => {
-        console.log('Ziyaretçi sayısı alınamadı:', error);
-    });
-    
+    // fetch(`https://count.iltekin.com/sanslitop/${endpoint}/start`, {
+    //     method: 'GET',
+    //     mode: 'cors'
+    // })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         localStorage.setItem('loginTime', currentTime.toString());
+    //         const visitorCount = document.createElement('div');
+    //         visitorCount.className = 'visitor-count';
+    //         visitorCount.textContent = `${data.value}`;
+    //         const userIcon = document.createElement('i');
+    //         userIcon.className = 'fas fa-user';
+    //         visitorCount.insertBefore(userIcon, visitorCount.firstChild);
+    //         document.body.appendChild(visitorCount);
+    //     })
+    //     .catch(error => {
+    //         console.log('Ziyaretçi sayısı alınamadı:', error);
+    //     });
+
     // Temel elementleri seç
     const startNum = document.getElementById('startNum');
     const endNum = document.getElementById('endNum');
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirm(translations[currentLang].confirmReset)) {
             // Hızı normale getir
             localStorage.setItem('animationSpeed', '2');
-            
+
             // Hız butonlarını güncelle
             document.querySelectorAll('.speed-option').forEach(btn => {
                 btn.classList.remove('active');
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Draw type'ı varsayılana getir (single-number)
             localStorage.setItem('drawType', 'single-number');
             drawTypeSelect.value = 'single-number';
-            
+
             // Buton metnini güncelle
             const history = document.querySelector('.history-section').querySelector('li');
             if (history) {
@@ -294,10 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Kaydedilmi sayıları yükle
     function loadSavedNumbers() {
         const history = JSON.parse(localStorage.getItem('lotteryHistory') || '[]');
-        
+
         // İsim listesini kontrol et
         const names = (localStorage.getItem('namesList') || '').split('\n').filter(name => name.trim());
-        
+
         if (history.length > 0) {
             // Kullanılmış sayıları localStorage'dan yükle
             usedNumbers = new Set(history);
@@ -308,13 +308,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 endNum.value = savedNumbers.end;
                 startNum.disabled = true;
                 endNum.disabled = true;
-                
+
                 pickButton.textContent = translations[currentLang].pickNewNumber;
 
                 // Top sayısını çekiliş türüne göre belirle
                 const digitCount = savedNumbers.end.toString().length;
                 const ballCount = drawTypeSelect.value === 'single-ball' ? 1 : digitCount;
-                
+
                 ballsContainer.innerHTML = '';
                 for (let i = 0; i < ballCount; i++) {
                     const ball = document.createElement('div');
@@ -329,15 +329,15 @@ document.addEventListener('DOMContentLoaded', () => {
             endNum.value = names.length.toString();
             startNum.disabled = true;
             endNum.disabled = true;
-            
+
             // İsim sayısını localStorage'a kaydet
             localStorage.setItem('lotteryRange', JSON.stringify({
                 start: 1,
                 end: names.length
             }));
-            
+
             pickButton.textContent = translations[currentLang].startDraw;
-            
+
             // Topları isim sayısına göre ayarla
             const digitCount = names.length.toString().length;
             ballsContainer.innerHTML = '';
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
             startNum.value = '1';
             endNum.value = '';
             pickButton.textContent = translations[currentLang].startDraw;
-            
+
             ballsContainer.innerHTML = '';
             for (let i = 0; i < 3; i++) {
                 const ball = document.createElement('div');
@@ -362,9 +362,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
             endNum.focus();
         }
-        
+
         adjustHistoryHeight();
     }
+
+    // Hediye listesi
+    const giftsData = {
+        "1": "Cartier Aksesuar",
+        "2": "Dyson V16 Süpürge",
+        "3": "Dyson Purifier Hava Temizleyici",
+        "4": "Nespresso Creatista Pro",
+        "5": "Playstation 5",
+        "6": "Ipad Pro M5",
+        "7": "AirPods Pro 3",
+        "8": "Xbox Series S Oyun Konsolu",
+        "9": "Gürcistan Seyahati",
+        "10": "Üsküp Seyahati",
+        "11": "İzmir Seyahati",
+        "12": "TAV Passport Kart",
+        "13": "TAV Passport Kart",
+        "14": "Six Sense Masaj",
+        "15": "Six Sense Masaj",
+        "16": "Six Sense Kahvaltı",
+        "17": "Six Sense Kahvaltı",
+        "18": "Six Sense Kahvaltı",
+        "19": "AirPods Pro 3",
+        "20": "AirPods Pro 3",
+        "21": "Iphone 17 Pro Max",
+        "22": "Columbia Hediye Çeki",
+        "23": "Columbia Hediye Çeki",
+        "24": "Apple Watch 11",
+        "25": "Roborock Akıllı Süpürge",
+        "26": "Scooter",
+        "27": "Kron Bisiklet XC75",
+        "28": "Maldivler Seyahati"
+    };
 
     // loadHistory fonksiyonunu buraya taşıyalım
     function loadHistory() {
@@ -376,8 +408,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Sonuçları indirme butonu için container
         const saveButtonContainer = document.createElement('div');
-        saveButtonContainer.className = 'save-results-container';
-        
+        saveButtonContainer.className = 'save-results-container hidden';
+
         const saveButton = document.createElement('button');
         saveButton.className = 'save-results-button';
         saveButton.innerHTML = '<i class="fas fa-download"></i>';
@@ -405,36 +437,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 .map((num, index) => {
                     const listIndex = num - startNumber;
                     const listItem = names[listIndex];
-                    const nameSpan = listItem ? `<span class="result-name">${listItem}</span>` : '';
-                    const numberSpan = `<span class="result-number">${num}</span>`;
-                    
+
                     // Sıra numarasını sıralamaya göre ayarla
-                    const displayIndex = currentSort === 'asc' ? 
-                        sortedHistory.length - index : 
+                    const displayIndex = currentSort === 'asc' ?
+                        sortedHistory.length - index :
                         index + 1;
+
+                    // Hediyeyi çekiliş sırasına göre al
+                    const gift = giftsData[displayIndex.toString()];
+                    const nameSpan = listItem ? `<span class="result-name">${listItem}</span>` : '';
+                    const giftSpan = gift ? `<span class="result-gift">${gift}</span>` : '';
+                    const numberSpan = `<span class="result-number">${num}</span>`;
 
                     return `<li>
                         <div class="left-content">
                             <span class="index-number">#${displayIndex}</span>
                             ${nameSpan}
                         </div>
-                        ${numberSpan}
+                        <div class="right-content">
+                            ${giftSpan}
+                            ${numberSpan}
+                        </div>
                     </li>`;
                 })
                 .join('');
             saveButton.disabled = false;
             saveButton.style.opacity = '1';
         }
-        
+
         // Mevcut save-results-container'ı kaldır (varsa)
         const existingContainer = document.querySelector('.save-results-container');
         if (existingContainer) {
             existingContainer.remove();
         }
-        
+
         // Yeni container'ı history-section'a ekle
         document.querySelector('.history-section').appendChild(saveButtonContainer);
-        
+
         clearHistoryBtn.disabled = history.length === 0;
         adjustHistoryHeight();
     }
@@ -452,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startNumber = parseInt(startNum.value) || 1;
         const currentSort = localStorage.getItem('sortOrder') || 'desc';
         const title = mainTitle.textContent;
-        
+
         // Tarih ve saat formatı
         const now = new Date();
         const day = String(now.getDate()).padStart(2, '0');
@@ -461,7 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const seconds = String(now.getSeconds()).padStart(2, '0');
-        
+
         const dateStr = `${day}.${month}.${year}`;
         const timeStr = `${hours}:${minutes}:${seconds}`;
 
@@ -471,17 +510,22 @@ document.addEventListener('DOMContentLoaded', () => {
         content += '------------------------\n';
 
         const sortedHistory = currentSort === 'asc' ? [...history].reverse() : [...history];
-        
+
         sortedHistory.forEach((num, index) => {
             const listIndex = num - startNumber;
             const listItem = names[listIndex];
             const displayIndex = index + 1;
-            
+            const gift = giftsData[displayIndex.toString()];
+
+            let line = `${displayIndex}. `;
             if (listItem) {
-                content += `${displayIndex}. ${listItem} (${num})\n`;
-            } else {
-                content += `${displayIndex}. ${num}\n`;
+                line += `${listItem} `;
             }
+            if (gift) {
+                line += `[${gift}] `;
+            }
+            line += `(${num})`;
+            content += line + '\n';
         });
 
         const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
@@ -491,7 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.href = url;
         // Dosya adında da aynı tarih formatını kullan
         a.download = `cekilis_sonuclari_${day}-${month}-${year}.txt`;
-        
+
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -528,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateNamesTextarea(isDrawActive) {
         const namesTextarea = document.getElementById('namesTextarea');
         const names = (localStorage.getItem('namesList') || '').split('\n').filter(name => name.trim());
-        
+
         if (isDrawActive && names.length > 0) {
             // Çekiliş aktifken sıra numaralı göster
             namesTextarea.value = names
@@ -545,7 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
         namesPopup.style.display = 'flex';
         const history = JSON.parse(localStorage.getItem('lotteryHistory') || '[]');
         const isDrawActive = history.length > 0;
-        
+
         updateNamesTextarea(isDrawActive);
 
         // Çekiliş durumuna göre butonları ayarla
@@ -584,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const names = namesTextarea.value.split('\n').filter(name => name.trim());
         localStorage.setItem('namesList', namesTextarea.value);
         namesPopup.style.display = 'none';
-        
+
         if (names.length > 0) {
             startNum.value = '1';
             endNum.value = names.length.toString();
@@ -632,7 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.history-header h3').textContent = translations[lang].drawResults;
         clearHistoryBtn.textContent = translations[lang].endDraw;
         document.querySelector('.popup-header h3').textContent = translations[lang].settings;
-        
+
         // Input placeholder'ları güncelle
         startNum.placeholder = translations[lang].startPlaceholder;
         endNum.placeholder = translations[lang].endPlaceholder;
@@ -656,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (speed === '2') btn.textContent = translations[lang].normal;
             if (speed === '1') btn.textContent = translations[lang].fast;
         });
-        
+
         // Buton metnini güncelle
         if (!document.querySelector('.history-section').querySelector('li')) {
             pickButton.textContent = translations[lang].startDraw;
@@ -730,7 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Footer metnini güncelle
-        document.querySelector('.footer p').innerHTML = translations[lang].footerText;
+        //document.querySelector('.footer p').innerHTML = translations[lang].footerText;
     }
 
     // Dil seçimi değiştiğinde
@@ -746,14 +790,14 @@ document.addEventListener('DOMContentLoaded', () => {
     startNum.addEventListener('change', () => {
         const start = parseInt(startNum.value);
         const end = parseInt(endNum.value);
-        
+
         // İlk sayı 1'den küçük olamaz kontrolü
         if (start < 1) {
             alert(translations[currentLang].startLessThanOne);
             startNum.value = '1';
             return;
         }
-        
+
         // Mevcut kontrol
         if (start > end && end) {
             alert(translations[currentLang].startGreaterThanEnd);
@@ -765,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
     endNum.addEventListener('change', () => {
         const start = parseInt(startNum.value);
         const end = parseInt(endNum.value);
-        
+
         if (start > end && start) {
             alert(translations[currentLang].endLessThanStart);
             endNum.value = '';
@@ -776,33 +820,40 @@ document.addEventListener('DOMContentLoaded', () => {
     pickButton.addEventListener('click', () => {
         const start = parseInt(startNum.value);
         const end = parseInt(endNum.value);
-        
+
         if (isNaN(start)) {
             alert(translations[currentLang].enterValidStart);
             return;
         }
-        
+
         if (isNaN(end)) {
             alert(translations[currentLang].enterValidEnd);
             return;
         }
-        
+
         if (start > end) {
             alert(translations[currentLang].startGreaterThanEnd);
             return;
         }
-        
+
         const max = end;
         const history = JSON.parse(localStorage.getItem('lotteryHistory') || '[]');
-        
+        const totalGifts = Object.keys(giftsData).length;
+
+        // Hediye sayısı kadar çekiliş yapıldıysa dur
+        if (history.length >= totalGifts) {
+            alert(translations[currentLang].drawEnded);
+            return;
+        }
+
         if (history.length === 0) {
             // İlk çekilişte input'ları devre dışı bırak
             startNum.disabled = true;
             endNum.disabled = true;
-            
+
             // İlk çekilişte topları oluştur
             const digits = max.toString().length;
-            
+
             ballsContainer.innerHTML = '';
             for (let i = 0; i < digits; i++) {
                 const ball = document.createElement('div');
@@ -810,11 +861,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 ball.innerHTML = `<div class="number-strip" id="ball${i}"></div>`;
                 ballsContainer.appendChild(ball);
             }
-            
+
             // Başlangıç ve bitiş sayılarını kaydet
             localStorage.setItem('lotteryRange', JSON.stringify({ start, end }));
         }
-        
+
         // Tüm sayılar çekildiyse uyarı ver
         if (usedNumbers.size >= (end - start + 1)) {
             endDraw();
@@ -829,7 +880,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return;
         }
-        
+
         // Yeni çekim öncesi topları temizle
         const digits = max.toString().length;
         ballsContainer.innerHTML = '';
@@ -839,18 +890,18 @@ document.addEventListener('DOMContentLoaded', () => {
             ball.innerHTML = `<div class="number-strip" id="ball${i}"></div>`;
             ballsContainer.appendChild(ball);
         }
-        
+
         // Çekiliş türüne göre animasyonu başlat
         if (drawTypeSelect.value === 'single-ball') {
             animateSingleBall(max);
         } else {
             animateBalls(max);
         }
-        
+
         // Buton metnini güncelle
         if (history.length === 0) {
-            pickButton.textContent = drawTypeSelect.value === 'single-ball' ? 
-                translations[currentLang].pickNewBall : 
+            pickButton.textContent = drawTypeSelect.value === 'single-ball' ?
+                translations[currentLang].pickNewBall :
                 translations[currentLang].pickNewNumber;
         }
     });
@@ -863,13 +914,13 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('lotteryRange');
             usedNumbers.clear();
             loadHistory();
-            
+
             // Hata mesajını temizle
             drawError.innerHTML = '';
-            
+
             // İsim listesi textarea'sını güncelle
             updateNamesTextarea(false);
-            
+
             // Input'ları aktif et
             namesTextarea.disabled = false;
             namesTextarea.style.opacity = '1';
@@ -877,7 +928,7 @@ document.addEventListener('DOMContentLoaded', () => {
             saveButton.style.opacity = '1';
             clearButton.disabled = false;
             clearButton.style.opacity = '1';
-            
+
             const warningMessage = document.querySelector('.warning-message');
             if (warningMessage) {
                 warningMessage.style.display = 'none';
@@ -890,7 +941,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 endNum.value = names.length.toString();
                 startNum.disabled = true;
                 endNum.disabled = true;
-                
+
                 // İsim sayısını localStorage'a kaydet
                 localStorage.setItem('lotteryRange', JSON.stringify({
                     start: 1,
@@ -902,9 +953,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 startNum.value = '1';
                 endNum.value = '';
             }
-            
+
             pickButton.textContent = translations[currentLang].startDraw;
-            
+
             ballsContainer.innerHTML = '';
             for (let i = 0; i < 3; i++) {
                 const ball = document.createElement('div');
@@ -912,9 +963,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 ball.innerHTML = `<div class="number-strip" id="ball${i}"></div>`;
                 ballsContainer.appendChild(ball);
             }
-            
+
             pickButton.disabled = false;
-            
+
             const message = pickButton.nextSibling;
             if (message && message.textContent === translations[currentLang].drawEnded) {
                 message.remove();
@@ -1027,13 +1078,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateNamesBadge() {
         const names = (localStorage.getItem('namesList') || '').split('\n').filter(name => name.trim());
         let badge = document.querySelector('.names-badge');
-        
+
         if (!badge) {
             badge = document.createElement('div');
             badge.className = 'names-badge';
             namesBtn.appendChild(badge);
         }
-        
+
         badge.textContent = names.length;
     }
 
@@ -1052,29 +1103,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const speedValue = localStorage.getItem('animationSpeed') || '2';
         const speedContainer = document.createElement('div');
         speedContainer.className = 'speed-buttons';
-        
+
         const speeds = [
             { value: '4', label: translations[currentLang].slow },
             { value: '2', label: translations[currentLang].normal },
             { value: '1', label: translations[currentLang].fast }
         ];
-        
+
         speeds.forEach(speed => {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = `speed-option ${speed.value === speedValue ? 'active' : ''}`;
             button.dataset.value = speed.value;
             button.textContent = speed.label;
-            
+
             button.addEventListener('click', () => {
                 document.querySelectorAll('.speed-option').forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
                 localStorage.setItem('animationSpeed', speed.value);
             });
-            
+
             speedContainer.appendChild(button);
         });
-        
+
         speedSelect.parentNode.replaceChild(speedContainer, speedSelect);
     }
 
@@ -1084,29 +1135,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortValue = localStorage.getItem('sortOrder') || 'desc';
         const sortContainer = document.createElement('div');
         sortContainer.className = 'speed-buttons';  // Aynı stili kullanıyoruz
-        
+
         const sortOptions = [
             { value: 'desc', label: translations[currentLang].descending },
             { value: 'asc', label: translations[currentLang].ascending }
         ];
-        
+
         sortOptions.forEach(option => {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = `sort-option ${option.value === sortValue ? 'active' : ''}`;
             button.dataset.value = option.value;
             button.textContent = option.label;
-            
+
             button.addEventListener('click', () => {
                 document.querySelectorAll('.sort-option').forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
                 localStorage.setItem('sortOrder', option.value);
                 loadHistory();
             });
-            
+
             sortContainer.appendChild(button);
         });
-        
+
         sortSelect.parentNode.replaceChild(sortContainer, sortSelect);
     }
 
@@ -1116,29 +1167,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const langValue = localStorage.getItem('language') || 'tr';
         const langContainer = document.createElement('div');
         langContainer.className = 'speed-buttons';  // Aynı stili kullanıyoruz
-        
+
         const languages = [
             { value: 'tr', label: '🇹🇷 Türkçe' },
             { value: 'en', label: '🇬🇧 English' }
         ];
-        
+
         languages.forEach(lang => {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = `lang-option ${lang.value === langValue ? 'active' : ''}`;
             button.dataset.value = lang.value;
             button.textContent = lang.label;
-            
+
             button.addEventListener('click', () => {
                 document.querySelectorAll('.lang-option').forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
                 localStorage.setItem('language', lang.value);
                 updateLanguage(lang.value);
             });
-            
+
             langContainer.appendChild(button);
         });
-        
+
         langSelect.parentNode.replaceChild(langContainer, langSelect);
     }
 
@@ -1151,7 +1202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function animateSingleBall(max) {
         const digits = max.toString().length;
         let randomNumber;
-        
+
         // İlk çekilişte yeni sayı seç
         if (currentBallIndex === 0) {
             do {
@@ -1160,7 +1211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Seçilen sayıyı localStorage'a kaydet
             localStorage.setItem('currentNumber', randomNumber.toString());
-            
+
             // Topları yeniden oluştur
             ballsContainer.innerHTML = '';
             for (let i = 0; i < digits; i++) {
@@ -1172,7 +1223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Mevcut sayıyı localStorage'dan al
             randomNumber = parseInt(localStorage.getItem('currentNumber'));
-            
+
             // Önceki topların içeriğini koru
             const result = randomNumber.toString().padStart(digits, '0').split('').map(Number);
             for (let i = 0; i < currentBallIndex; i++) {
@@ -1193,7 +1244,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     usedNumbers.add(randomNumber);
                     currentBallIndex = 0; // Sıfırla
                     localStorage.removeItem('currentNumber'); // Geçici sayıyı temizle
-                    
+
                     if (isSoundOn) {
                         resultSound.currentTime = 0;
                         resultSound.play();
@@ -1219,7 +1270,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Strip oluştur ve animasyon yap
             let strip = document.createElement('div');
             strip.className = 'number-strip';
-            
+
             for (let j = 0; j < 10; j++) {
                 for (let i = 0; i <= 9; i++) {
                     let num = document.createElement('div');
@@ -1228,7 +1279,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     strip.appendChild(num);
                 }
             }
-            
+
             let finalNum = document.createElement('div');
             finalNum.className = 'number';
             finalNum.textContent = selectedNumber;
@@ -1242,9 +1293,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 processingSound.play();
             }
 
-            gsap.fromTo(strip, 
+            gsap.fromTo(strip,
                 { y: 0 },
-                { 
+                {
                     y: -(100 * 99 + selectedNumber * 100),
                     duration: parseInt(currentSpeed),
                     ease: "power2.inOut",
@@ -1259,7 +1310,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             usedNumbers.add(randomNumber);
                             currentBallIndex = 0;
                             localStorage.removeItem('currentNumber');
-                            
+
                             if (isSoundOn) {
                                 resultSound.currentTime = 0;
                                 resultSound.play();
@@ -1287,13 +1338,13 @@ document.addEventListener('DOMContentLoaded', () => {
     drawTypeSelect.addEventListener('change', () => {
         const history = document.querySelector('.history-section').querySelector('li');
         const end = parseInt(endNum.value);
-        
+
         // Draw type'ı localStorage'a kaydet
         localStorage.setItem('drawType', drawTypeSelect.value);
-        
+
         if (!isNaN(end)) {
             const digits = end.toString().length;
-            
+
             // Her zaman sayı kadar top göster
             ballsContainer.innerHTML = '';
             for (let i = 0; i < digits; i++) {
@@ -1303,7 +1354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ballsContainer.appendChild(ball);
             }
         }
-        
+
         // Çoklu otomatik seçildiğinde input'u göster
         if (drawTypeSelect.value === 'multi-auto') {
             drawCountContainer.style.display = 'block';
@@ -1311,12 +1362,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             drawCountContainer.style.display = 'none';
         }
-        
+
         if (!history) {
             pickButton.textContent = translations[currentLang].startDraw;
         } else {
-            pickButton.textContent = drawTypeSelect.value === 'single-ball' ? 
-                translations[currentLang].pickNewBall : 
+            pickButton.textContent = drawTypeSelect.value === 'single-ball' ?
+                translations[currentLang].pickNewBall :
                 translations[currentLang].pickNewNumber;
         }
     });
@@ -1325,18 +1376,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedDrawType = localStorage.getItem('drawType');
     if (savedDrawType) {
         drawTypeSelect.value = savedDrawType;
-        
+
         // Çoklu otomatik seçiliyse input'u göster
         if (savedDrawType === 'multi-auto') {
             drawCountContainer.style.display = 'block';
             drawCountInput.placeholder = translations[currentLang].drawCount;
         }
-        
+
         // Eğer çekiliş devam ediyorsa buton metnini güncelle
         const history = document.querySelector('.history-section').querySelector('li');
         if (history) {
-            pickButton.textContent = savedDrawType === 'single-ball' ? 
-                translations[currentLang].pickNewBall : 
+            pickButton.textContent = savedDrawType === 'single-ball' ?
+                translations[currentLang].pickNewBall :
                 translations[currentLang].pickNewNumber;
         }
     }
@@ -1358,7 +1409,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentDraw < drawCount && isAutoDrawing) {
                 const end = parseInt(endNum.value);
                 const start = parseInt(startNum.value);
-                
+
                 // Kullanılabilir sayı kalmadıysa durdur
                 if (usedNumbers.size >= (end - start + 1)) {
                     stopAutoDraw();
@@ -1429,7 +1480,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (index >= digits) {
                 saveResult(randomNumber);
                 pickButton.disabled = false;
-                
+
                 if (isSoundOn) {
                     resultSound.currentTime = 0;
                     resultSound.play();
@@ -1455,7 +1506,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Sonsuz döngü için strip oluştur
             let strip = document.createElement('div');
             strip.className = 'number-strip';
-            
+
             // 10 set rakam oluştur (sonsuz görünüm için)
             for (let j = 0; j < 10; j++) {
                 for (let i = 0; i <= 9; i++) {
@@ -1465,7 +1516,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     strip.appendChild(num);
                 }
             }
-            
+
             // Son sayıyı ekle
             let finalNum = document.createElement('div');
             finalNum.className = 'number';
@@ -1482,9 +1533,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // GSAP ile animasyon
-            gsap.fromTo(strip, 
+            gsap.fromTo(strip,
                 { y: 0 },
-                { 
+                {
                     y: -(100 * 99 + selectedNumber * 100),
                     duration: parseInt(currentSpeed),
                     ease: "power2.inOut",
@@ -1504,13 +1555,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let history = JSON.parse(localStorage.getItem('lotteryHistory') || '[]');
         history.push(number);
         localStorage.setItem('lotteryHistory', JSON.stringify(history));
-        
+
         // Kullanılmış sayıları da kaydet
         localStorage.setItem('usedNumbers', JSON.stringify([...usedNumbers]));
-        
+
         // Geçmiş eklendiğinde butonu aktif et
         clearHistoryBtn.disabled = false;
-        
+
         loadHistory();
 
         // Son eklenen satırı bul ve highlight animasyonunu uygula
@@ -1518,7 +1569,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const historyItems = historyList.querySelectorAll('li');
         // desc modunda ilk öğe, asc modunda son öğe highlight edilmeli
         const targetItem = currentSort === 'asc' ? historyItems[0] : historyItems[historyItems.length - 1];
-        
+
         if (targetItem) {
             targetItem.classList.add('highlight-animation');
             setTimeout(() => {
@@ -1527,7 +1578,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.getElementById('clearNames').addEventListener('click', function() {
+    document.getElementById('clearNames').addEventListener('click', function () {
         document.getElementById('namesTextarea').value = '';
         document.getElementById('namesPopup').style.display = 'none';  // Popup'ı kapat
     });
@@ -1569,5 +1620,116 @@ document.addEventListener('DOMContentLoaded', () => {
         titleInput.value = ' ';  // Bir boşluk karakteri
         mainTitle.textContent = ' ';  // Bir boşluk karakteri
         localStorage.setItem('drawTitle', ' ');  // Bir boşluk karakteri
+    });
+
+    // Klavye kısayolları
+    const controlIcons = document.querySelector('.control-icons');
+    const inputSection = document.querySelector('.input-section');
+
+    // "o" tuşuna basılı tutulduğunda hidden kaldır, bırakıldığında geri ekle
+    document.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'o' && !e.repeat) {
+            controlIcons.classList.remove('hidden');
+            inputSection.classList.remove('hidden');
+            clearHistoryBtn.classList.remove('hidden');
+            const saveResultsContainer = document.querySelector('.save-results-container');
+            if (saveResultsContainer) {
+                saveResultsContainer.classList.remove('hidden');
+            }
+        }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.key.toLowerCase() === 'o') {
+            controlIcons.classList.add('hidden');
+            inputSection.classList.add('hidden');
+            clearHistoryBtn.classList.add('hidden');
+            const saveResultsContainer = document.querySelector('.save-results-container');
+            if (saveResultsContainer) {
+                saveResultsContainer.classList.add('hidden');
+            }
+        }
+    });
+
+    // "b" tuşuna basıldığında pickButton'u tetikle
+    document.addEventListener('keydown', (e) => {
+        // Input veya textarea içindeyken çalışmasın
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+            return;
+        }
+        if (e.key.toLowerCase() === 'b' && !e.repeat) {
+            pickButton.click();
+        }
+    });
+
+    // "d" tuşuna basılı tutulduğunda main-container sürüklenebilir olsun
+    const mainContainer = document.querySelector('.main-container');
+    let isDragMode = false;
+    let isDragging = false;
+    let dragStartX, dragStartY;
+    let containerStartX, containerStartY;
+
+    // "d" tuşuna basılı tutulduğunda drag modunu aktif et
+    document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+            return;
+        }
+        if (e.key.toLowerCase() === 'd' && !e.repeat) {
+            isDragMode = true;
+            mainContainer.style.cursor = 'grab';
+        }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.key.toLowerCase() === 'd') {
+            isDragMode = false;
+            isDragging = false;
+            mainContainer.style.cursor = '';
+        }
+    });
+
+    // Mouse down - sürüklemeye başla
+    mainContainer.addEventListener('mousedown', (e) => {
+        if (!isDragMode) return;
+
+        isDragging = true;
+        mainContainer.style.cursor = 'grabbing';
+
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+
+        // Mevcut pozisyonu al
+        const rect = mainContainer.getBoundingClientRect();
+        containerStartX = rect.left;
+        containerStartY = rect.top;
+
+        // Pozisyonu fixed yap
+        mainContainer.style.position = 'fixed';
+        mainContainer.style.left = containerStartX + 'px';
+        mainContainer.style.top = containerStartY + 'px';
+        mainContainer.style.margin = '0';
+
+        e.preventDefault();
+    });
+
+    // Mouse move - sürükle
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        const deltaX = e.clientX - dragStartX;
+        const deltaY = e.clientY - dragStartY;
+
+        mainContainer.style.left = (containerStartX + deltaX) + 'px';
+        mainContainer.style.top = (containerStartY + deltaY) + 'px';
+    });
+
+    // Mouse up - sürüklemeyi bitir
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            if (isDragMode) {
+                mainContainer.style.cursor = 'grab';
+            }
+        }
     });
 }); 
