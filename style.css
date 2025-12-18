@@ -6,7 +6,7 @@
 body {
     margin: 0;
     background-color: #283582;
-    background-image: url("./assets/background.jpg?v=4");
+    background-image: url("./assets/background.jpg?v=5");
     background-size: 100%;
     background-repeat: no-repeat;
     display: flex;
@@ -61,6 +61,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 300px;
+    min-width: 320px;
 }
 
 .empty-state {
